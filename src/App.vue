@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<vheader></vheader>
-		<div class="tab">
+		<div class="tab border-1px">
 			<div class="item-tab">
 				<router-link to="/foods">商品</router-link>
 			</div>
@@ -13,9 +13,6 @@
 			</div>
 		</div>
 		<router-view></router-view>
-		<!-- <div class="content">
-			content
-		</div> -->
 	</div>
 </template>
 
@@ -30,18 +27,26 @@ export default {
 </script>
 
 <style lang="less">
-@tab-height: 40px; //tab 高度
-#app {
-	width: 100%;
-	.tab {
-		display: flex;
+	@import './common/less/common';
+
+	@tab-height: 40px; //tab 高度
+	#app {
 		width: 100%;
-		height: @tab-height;
-		line-height: @tab-height;
-		.item-tab {
-			flex: 1;
-			text-align: center;
+		.tab {
+			display: flex;
+			width: 100%;
+			height: @tab-height;
+			line-height: @tab-height;
+			.border-1px(rgba(7,17,27,0.1));
+			.item-tab {
+				flex: 1;
+				text-align: center;
+				font-size: 14px;
+				color: rgb(77, 85, 93);
+				.active {
+					color: rgb(240, 20, 20)
+				}
+			}
 		}
 	}
-}
 </style>
