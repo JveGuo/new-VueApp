@@ -2,7 +2,7 @@
  * @Author: JveGuo
  * @Date: 2017-08-24 23:04:12
  * @Last Modified by: JveGuo
- * @Last Modified time: 2017-08-27 21:26:58
+ * @Last Modified time: 2017-08-28 14:59:09
  */
 
 <template>
@@ -51,7 +51,7 @@
 							<div class="line"></div>
 						</div>
 						<ul v-if="seller.supports" class="supports">
-							<li v-for="(item,index) in seller.supports" class="item">
+							<li v-for="(item,index) in seller.supports" class="item" :key="index">
 								<span class="icon" :class="iconImgArr[seller.supports[index].type]"></span>
 								<span class="text">{{seller.supports[index].description}}</span>
 							</li>

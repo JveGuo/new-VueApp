@@ -1,7 +1,14 @@
+/*
+ * @Author: JveGuo
+ * @Date: 2017-08-28 17:58:57
+ * @Last Modified by:   JveGuo
+ * @Last Modified time: 2017-08-28 17:58:57
+ */
+
 <template>
   <div class="star" :class="starsize">
     <!-- <span v-for="item in items" :class="itemclass" class="star-item"></span> -->
-    <span v-for="(item,index) in items" :class="item" class="star-item" key="index"></span>
+    <span v-for="(item,index) in items" :class="item" class="star-item" :key="index"></span>
   </div>
 </template>
 
