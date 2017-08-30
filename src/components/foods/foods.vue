@@ -33,11 +33,13 @@
         </li>
       </ul>
     </div>
+    <shopCart :peisong="seller.deliveryPrice" :minPeisong="seller.minPrice"></shopCart>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll';
+import shopCart from '../shopcart/shaopcart';
 export default {
   props: {
     seller: {
@@ -107,6 +109,9 @@ export default {
       let el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
     }
+  },
+  components: {
+    shopCart
   }
 };
 </script>
