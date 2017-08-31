@@ -11,8 +11,17 @@
         <div class="price" :class="{'light':totalCount>0}">￥{{totalPrice}}</div>
         <div class="peisong">另需配送费￥{{peisong}} 元</div>
       </div>
-      <div class="content-right">
-        ￥{{minPeisong}}元
+      <div class="content-right" :class="payenough">
+        {{pay}}
+      </div>
+    </div>
+    <div class="balldrop-wrapper">
+      <div v-for="(ball,index) in balls" :key="index">
+        <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
+          <div class="ball" v-show="ball.show">
+            <div class="inner inner-hook"></div>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -24,12 +33,7 @@
       selectFood: {
         type: Array,
         default () {
-          return [
-            {
-              price: 10,
-              count: 1
-            }
-          ];
+          return [];
         }
       },
       peisong: {
@@ -40,6 +44,25 @@
         type: Number,
         default: 0
       }
+    },
+    data () {
+      return {
+        balls: [
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          }
+        ],
+        dropBalls: []
+      };
     },
     computed: {
       totalPrice () {
@@ -55,6 +78,30 @@
           total += item.count;
         }
         return total;
+      },
+      // 改变起送价格
+      pay () {
+        if (this.totalPrice === 0) {
+          return `￥${this.minPeisong} 起送`;
+        } else if (this.totalPrice < this.minPeisong) {
+          let money = this.minPeisong - this.totalPrice;
+          return `还差￥${money} 起送`;
+        } else {
+          return `去结算`;
+        }
+      },
+      // 改变背景色
+      payenough () {
+        if (this.totalPrice < this.minPeisong) {
+          return 'not-enough';
+        } else {
+          return 'enough';
+        }
+      }
+    },
+    methods: {
+      drop (el) {
+
       }
     }
   };
@@ -151,8 +198,28 @@
         text-align: center;
         font-size: 14px;
         font-weight: 700;
-        color: rgba(255, 255, 255, 0.4);
-        background: #2b333b;
+        &.not-enough{
+          color: rgba(255, 255, 255, 0.4);
+          background: #2b333b;
+        }
+        &.enough{
+          background: #00b43c;
+          color: #fff;
+        }
+      }
+    }
+    .balldrop-wrapper{
+      .ball{
+        position: fixed;
+        left: 32px;
+        bottom: 22px;
+        z-index: 200;
+        .inner{
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: rgb(0, 160, 220);
+        }
       }
     }
   }
