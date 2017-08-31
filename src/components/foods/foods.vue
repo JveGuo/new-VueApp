@@ -28,18 +28,22 @@
                   <span class="now-price">￥{{food.price}}</span><span v-show="food.oldPrice" class="old-price">{{food.oldPrice}}</span>
                 </div>
               </div>
+              <div class="ball-wrapper">
+                <numberball @addCount="addFood" :food="food"></numberball>
+              </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
-    <shopCart :peisong="seller.deliveryPrice" :minPeisong="seller.minPrice"></shopCart>
+    <shopCart ref="shopcart" :selectFood="selectFood" :peisong="seller.deliveryPrice" :minPeisong="seller.minPrice"></shopCart>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll';
 import shopCart from '../shopcart/shaopcart';
+import numberball from '../numberball/numberball';
 export default {
   props: {
     seller: {
@@ -63,9 +67,21 @@ export default {
         }
       }
       return 0;
+    },
+    selectFood () {
+      let selectArr = [];
+      for (let food of this.foods) {
+        for (let item of food.foods) {
+          if (item.count) {
+            selectArr.push(item);
+          }
+        }
+      }
+      return selectArr;
     }
   },
   created () {
+    console.log(this.foods);
     this.iconImgArr = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     this.$http.get('/api/foods').then((res) => {
       res = res.body;
@@ -108,10 +124,19 @@ export default {
       let foodList = this.$refs.foodList;
       let el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
+    },
+    addFood (target) {
+      this._drop(target);
+    },
+    _drop (target) {
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target);
+      });
     }
   },
   components: {
-    shopCart
+    shopCart,
+    numberball
   }
 };
 </script>
@@ -244,6 +269,11 @@ export default {
               color: rgb(147, 153, 159);
             }
           }
+        }
+        .ball-wrapper{
+          position: absolute;
+          bottom: 12px;
+          right: 0;
         }
       }
     }
