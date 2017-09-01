@@ -129,6 +129,7 @@ export default {
       this._drop(target);
     },
     _drop (target) {
+      // 与下落小球动画 异步执行
       this.$nextTick(() => {
         this.$refs.shopcart.drop(target);
       });
