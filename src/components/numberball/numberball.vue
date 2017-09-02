@@ -1,12 +1,12 @@
 <template>
   <div class="numberball">
     <transition name="move">
-      <div class="reduce" v-show="food.count>0" @click="reduceCount">
+      <div class="reduce" v-show="food.count>0" @click.stop="reduceCount">
         <span class="icon-remove_circle_outline"></span>
       </div>
     </transition>
     <div class="number" v-show="food.count>0">{{food.count}}</div>
-    <div class="add icon-add_circle" @click="addCount"></div>
+    <div class="add icon-add_circle" @click.stop="addCount"></div>
   </div>
 </template>
 
