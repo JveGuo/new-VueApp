@@ -14,7 +14,7 @@
         <li v-for="(item,index) in foods" :key="index" class="title-item" ref="foodList">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="(food,index) in item.foods" :key="index" class="food-item border-1px">
+            <li v-for="(food,index) in item.foods" :key="index" @click="showDetail(food, $event)" class="food-item border-1px">
               <div class="icon">
                 <img :src="food.icon" width="57" height="57">
               </div>
@@ -37,6 +37,7 @@
       </ul>
     </div>
     <shopCart ref="shopcart" :selectFood="selectFood" :peisong="seller.deliveryPrice" :minPeisong="seller.minPrice"></shopCart>
+    <foodDetail @addCount="addFood" :food="clickedFood" ref="foodDetail"></foodDetail>
   </div>
 </template>
 
@@ -44,6 +45,7 @@
 import BScroll from 'better-scroll';
 import shopCart from '../shopcart/shaopcart';
 import numberball from '../numberball/numberball';
+import foodDetail from '../fooddetail/fooddetail';
 export default {
   props: {
     seller: {
@@ -54,7 +56,8 @@ export default {
     return {
       foods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      clickedFood: {}
     };
   },
   computed: {
@@ -133,11 +136,16 @@ export default {
       this.$nextTick(() => {
         this.$refs.shopcart.drop(target);
       });
+    },
+    showDetail (food, event) {
+      this.clickedFood = food;
+      this.$refs.foodDetail.show();
     }
   },
   components: {
     shopCart,
-    numberball
+    numberball,
+    foodDetail
   }
 };
 </script>
