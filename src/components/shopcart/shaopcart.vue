@@ -37,7 +37,7 @@
                 <span class="name">{{food.name}}</span>
                 <div class="price">{{food.price*food.count}}</div>
                 <div class="count-wrapper">
-                  <numberball :food="food"></numberball>
+                  <numberball @addCount="addFood" :food="food"></numberball>
                 </div>
               </li>
             </ul>
@@ -199,6 +199,9 @@
           ball.show = false;
           el.style.display = 'none';
         }
+      },
+      addFood (el) {
+        this.drop(el);
       },
       toggleShow () {
         if (!this.totalCount) {
