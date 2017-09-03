@@ -12,13 +12,16 @@
 				<router-link to="/seller">商家</router-link>
 			</div>
 		</div>
-		<router-view :seller="seller"></router-view>
+		<keep-alive>
+			<router-view :seller="seller"></router-view>
+		</keep-alive>
 	</div>
 </template>
 
 <script>
 //	import header from 'components/header/header';
 import header from '@/components/header/header';
+
 export default {
 	data () {
 		return {
@@ -30,7 +33,7 @@ export default {
 			res = res.body;
 			if (res.errorRet === 0) {
 				this.seller = res.data;
-				console.log(res.data);
+				// console.log(res.data);
 			}
 		});
 	},
